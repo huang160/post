@@ -1,0 +1,13 @@
+.manage {
+  height: 90%;
+  padding: 20px 0;
+  overflow: hidden;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.dialog-footer {
+  text-align: center;
+}
