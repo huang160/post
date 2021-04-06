@@ -90,6 +90,7 @@ exports.ChatModel = ChatModel
 const identitySchema = mongoose.Schema({
   pid: {type: ObjectId, required: true}, //关联boss的_id
   name: {type: String, required: true}, // 关联boss姓名
+  idNo: {type: String, required: true}, // 身份证号码
   cons: {type: String, required: true}, // 身份证正面照
   pros: {type: String, required: true}, // 身份证反面
   status: {type: Number, default: 2}, // 实名状态参数值( 0、1、2)
@@ -111,6 +112,7 @@ const positionSchema = mongoose.Schema({
   experience: {type: String, required: true}, // 经验
   education: {type: String, required: true}, // 学历
   city: {type: String, required: true}, // 工作城市
+  addr: {type: String, required: true}, // 公司地址坐标
   duty: {type: String, required: true}, // 岗位职责
   requirement: {type: String, required: true}, // 任职要求
   status: {type: Number, default: 2}, // 审核状态参数:0,1,2,3

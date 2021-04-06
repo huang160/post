@@ -34,8 +34,7 @@ export default {
   },
   // boss实名认证相关
   [RECEIVE_IDENTITY]: (state, data) => {
-    const {pros, cons, status, remark} = data
-    return state.identity = {pros, cons, status, remark}
+    return state.identity = data
   },
   [IDENTITY_MSG]: (state, msg) => {
     return state.identity = msg

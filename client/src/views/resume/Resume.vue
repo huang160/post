@@ -24,7 +24,7 @@
       rows="2"
       type="textarea"
       maxlength="50"
-      :placeholder="user.info ? user.info : '如：(IT)熟悉html/css语言,具备良好的编程习惯...' "
+      :placeholder="'如：(IT)熟悉html/css语言,具备良好的编程习惯...' "
       show-word-limit
     />
     <van-cell
@@ -115,7 +115,7 @@ export default {
         education: this.education,
         certificate: this.certificate
       }
-      this.$store.dispatch('updatePost', data).then(res => {
+      this.$store.dispatch('updateUser', data).then(res => {
         if (res.data.code === 0){
           Toast.success('保存成功')
           this.$router.back()
@@ -140,6 +140,16 @@ export default {
       }
     }).catch(() => {
       Toast.fail('网络错误')
+    })
+    this.$store.dispatch('getUser').then(res => {
+      if (res.data.code ===0 ){
+        const result = res.data.data
+        if (result.info){
+          this.info = result.info
+          this.certificate = result.certificate
+          this.education = result.education
+        }
+      }
     })
   },
   mounted() {

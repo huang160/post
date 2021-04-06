@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
 //管理员注册
 router.post('/register', function (req, res) {
-  let token = req.header['authorization'] //获取请求头参数
+  let token = req.headers['authorization'] //获取请求头参数
   if(!token) res.send({code: 4000, msg: '请先登录~'})
   verToken(token).then(data => {
     const {code, obj} = data
@@ -61,7 +61,7 @@ router.post('/login', function (req, res){
 
 //管理员信息更改
 router.post('/update', function (req, res) {
-  let token = req.header['authorization'] //获取请求头参数
+  let token = req.headers['authorization'] //获取请求头参数
   const msg = req.body
   if(!token) res.send({code: 4000, msg: '请先登录~'})
   verToken(token).then(data => {
@@ -83,8 +83,7 @@ router.post('/update', function (req, res) {
 //管理员删除
 router.post('/del', function (req, res){
   const {_id} = req.body
-  let token = req.header['authorization'] //获取请求头参数
-  const ak = 'MBZMd8x62ipirNXCtvGrm0PDr3j4WXH2'
+  let token = req.headers['authorization'] //获取请求头参数
   if(!token) res.send({code: 4000, msg: '请先登录~'})
   verToken(token).then(data => {
     const {code} = data

@@ -4,7 +4,47 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8c085108-7dd8-4290-95f2-17c10faf9828" name="Default Changelist" comment="" />
+    <list default="true" id="8c085108-7dd8-4290-95f2-17c10faf9828" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../client/src/assets/img/bz.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/605834f3855d02299837d7d8_cons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/605834f3855d02299837d7d8_pros.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/60583b27855d02299837d7da_cons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/60583b27855d02299837d7da_pros.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/606b2121d0b43a38e044ff8d_cons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/606b2121d0b43a38e044ff8d_pros.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/606b37e0d0b43a38e044ff92_cons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/identityImgs/606b37e0d0b43a38e044ff92_pros.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/_202104411432060583b27855d02299837d7da.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/_2021045223858606b20dfd0b43a38e044ff8c.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/_2021045223956606b2121d0b43a38e044ff8d.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/_202104601716606b37e0d0b43a38e044ff92.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/_202104602710606b20dfd0b43a38e044ff8c.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backstage/src/views/Identity/Identity.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../backstage/src/views/Identity/Identity.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/network/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/network/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/store/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/store/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/store/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/store/mutations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/identity/Identity.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/identity/Identity.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/index/ApplicantIndex.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/index/ApplicantIndex.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/management/Management.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/management/Management.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/message/ApplicantMessage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/message/ApplicantMessage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/message/BossMessage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/message/BossMessage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/profile/ApplicantProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/profile/ApplicantProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/profile/BossProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/profile/BossProfile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/release/Release.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/release/Release.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/views/resume/Resume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/views/resume/Resume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/models.js" beforeDir="false" afterPath="$PROJECT_DIR$/db/models.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/identityImgs/60141ef92147114114b1c39f_pros.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/identityImgs/60141ef92147114114b1c39f_pros.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/assets.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/assets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +56,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -32,6 +75,7 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1mHzI5HE9e5ZFiQSoZusJcC00w4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,6 +85,7 @@
     <property name="JavaScriptWeakerCompletionTypeGuess" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.18.3" />
     <property name="javascript.nodejs.core.library.typings.version" value="12.19.11" />
@@ -162,6 +207,9 @@
       <workItem from="1616037212668" duration="646000" />
       <workItem from="1616384753040" duration="7540000" />
       <workItem from="1616466578441" duration="7962000" />
+      <workItem from="1617459204159" duration="2873000" />
+      <workItem from="1617504468665" duration="18055000" />
+      <workItem from="1617590854913" duration="8827000" />
     </task>
     <servers />
   </component>
@@ -174,7 +222,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/db/models.js</url>
           <line>90</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

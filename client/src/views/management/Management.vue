@@ -7,7 +7,7 @@
       @click-left="$router.back()"
     >
       <template #right>
-        <van-icon name="add-o" @click="$router.push('/release')"/>
+        <van-icon name="add-o" size="20" @click="$router.push('/release')"/>
       </template>
     </van-nav-bar>
     <div id="container" style="margin-top: 46px">
@@ -15,7 +15,7 @@
         left-icon="info-o"
         text="审核中请勿多次提交修改！只有审核通过的职位才会被牛人看到..."
       />
-      <van-empty v-if="!postList" image="search" description="暂无职位，快去发布吧！" />
+      <van-empty v-if="postList.length < 1" image="search" description="暂无可管理的职位，快去发布吧！" />
       <div
         v-else
         class="postList"

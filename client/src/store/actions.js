@@ -4,6 +4,7 @@ import {
   reqLogin,
   reqUpdateUser,
   reqIdentity,
+  reqUpdateIde,
   reqIdentityMsg,
   reqUser,
   reqUserList,
@@ -16,6 +17,8 @@ import {
   reqReadMsg,
   postList,
   cityList,
+  reqAddrTip,
+  reqAddrCode
 } from '../network/index'
 
 import {
@@ -32,7 +35,6 @@ import {
   RESET_USER,
   RECEIVE_IDENTITY,
   IDENTITY_MSG,
-  RECEIVE_POST,
   RECEIVE_POST_LIST,
   RECEIVE_USER_LIST,
   RECEIVE_MSG_LIST,
@@ -177,6 +179,19 @@ export default {
     })
   },
 
+  //异步更新boss实名认证信息
+  updateIde(context, data) {
+    return reqUpdateIde(data).then(res => {
+      if (res.data.code === 0){
+        context.commit(RECEIVE_IDENTITY, res.data.data)
+        return res
+      }else {
+        context.commit(IDENTITY_MSG, res.data.msg)
+        return res
+      }
+    })
+  },
+
   // 职位发布异步action
   position(context, data){
     return reqPosition(data).then(res => {
@@ -217,8 +232,10 @@ export default {
    return reqUser().then(res => {
       if (res.data.code ===0 ){
         getMsgList(context, res.data.data._id)
-        getIdentity(context, res.data.data.type)
-        getPostListMsg(context, res.data.data.type)
+        if (res.data.data.type === 'Boss') {
+          getIdentity(context, res.data.data.type)
+          getPostListMsg(context, res.data.data.type)
+        }
         context.commit(RECEIVE_USER, res.data.data)
         return res
       }else {
@@ -263,5 +280,23 @@ export default {
   // 获取城市地理信息异步action
   getCityList(){
     return cityList()
+  },
+
+  // 获取百度地图接口地点输入提示信息
+  getAddrTip(context, data) {
+    return reqAddrTip(data).then(res => {
+      if (res.data.code === 0){
+        return res
+      }
+    })
+  },
+
+  // 获取百度地图接口逆地理编码
+  getAddrCode(context, address) {
+    return reqAddrCode(address).then(res => {
+      if (res.data.code === 0){
+        return res
+      }
+    })
   }
 }

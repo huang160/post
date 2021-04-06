@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var request = require('request')
 
 const md5 = require('blueimp-md5')
-const {current} =  require('../utils')
+const {current, parseStringToStar} =  require('../utils')
 const {UserModel,ChatModel,IdentityModel,ExpModel} = require('../db/models')
 const filter = {password: 0,__v:0} //指定过滤的属性
 
@@ -198,7 +199,7 @@ router.get('/userlist', function (req, res) {
     certificate: 1
   }
   UserModel.aggregate([
-    {$match: {type}}, // 过滤筛选出boss的用户
+    {$match: {type}}, // 过滤筛选出牛人用户
     {$project: data}, // 只显示其字段
     // 连表查询, form:子级集合 ,localField：父级id匹配foreignField：子级pid
     {
@@ -268,21 +269,60 @@ router.post('/readmsg', function (req, res) {
 router.post('/identity', function (req, res) {
   // 从cookies获取boss的_id
   const {userid} = req.cookies
-  IdentityModel.findOne({pid: userid}, function (err, data){
+  const {pros, cons, name, idNo} = req.body
+  if(!userid) res.send({code: 1, msg: '请先登录~'})
+  IdentityModel.findOne({'$or': [{pid: userid}, {name, idNo}]}, function (err, data){
     if (data){
-      res.send({code: 1, msg: '用户已上传实名认证'})
-    }else {
-      const {pros, cons, name} = req.body
+      res.send({code: 1, msg: '用户已上传过实名认证'})
+    } else {
       if (pros !== '' && cons !== ''){
         const prosImg = Buffer.from(pros, 'base64') // 正面照base64格式转换
         const consImg = Buffer.from(cons, 'base64') // 反面照base64格式转换
         fs.writeFile(`public/identityImgs/${userid}_pros.png`, prosImg ,err => err )
         fs.writeFile(`public/identityImgs/${userid}_cons.png`, consImg ,err => err )
       }
-      new IdentityModel({pros: userid + '_pros.png', cons: userid + '_cons.png', pid: userid, name}).save(function (err, identity){
+      const doc = {
+        pros: userid + '_pros.png',
+        cons: userid + '_cons.png',
+        pid: userid,
+        name,
+        idNo
+      }
+      new IdentityModel(doc).save(function (err, identity){
         // 返回包含identity的json数据
-        res.send({code: 0, data: identity})
+        const {remark, status} = identity
+        const data = { name: parseStringToStar(name), idNo: parseStringToStar(idNo), remark, status}
+        res.send({code: 0, data})
       })
+    }
+  })
+})
+
+// boss身份认证信息更改
+router.post('/ideStatus', function (req, res){
+  // 从cookies获取boss的_id
+  const {userid} = req.cookies
+  const {pros, cons, name, idNo, remark, status} = req.body
+  if(!userid) res.send({code: 1, msg: '请先登录~'})
+  if (pros !== '' && cons !== ''){
+    const prosImg = Buffer.from(pros, 'base64') // 正面照base64格式转换
+    const consImg = Buffer.from(cons, 'base64') // 反面照base64格式转换
+    fs.writeFile(`public/identityImgs/${userid}_pros.png`, prosImg ,err => err )
+    fs.writeFile(`public/identityImgs/${userid}_cons.png`, consImg ,err => err )
+  }
+  const doc = {
+    pros: userid + '_pros.png',
+    cons: userid + '_cons.png',
+    name,
+    idNo,
+    remark,
+    status
+  }
+  IdentityModel.findOneAndUpdate({pid: userid}, doc, {new: true},function (err, ide){
+    if (ide) {
+      res.send({code: 0, data: {name: parseStringToStar(name), idNo: parseStringToStar(idNo), status, remark}})
+    } else {
+      res.send({code: 1, msg: '无此用户，请重新登录~'})
     }
   })
 })
@@ -291,9 +331,16 @@ router.post('/identity', function (req, res) {
 router.get('/identitymsg', function (req, res){
   // 从cookies获取boss的_id
   const {userid} = req.cookies
-  IdentityModel.findOne({pid: userid}, filter, function (err, identity){
+  if (!userid) res.send({code: 1, msg: '请先登录~'})
+  IdentityModel.findOne({pid: userid}, {__v:0, pros: 0, cons: 0}, function (err, identity){
     if (identity){
-      res.send({code: 0, data: identity})
+      const data = {
+        status: identity.status,
+        remark: identity.remark,
+        name: parseStringToStar(identity.name),
+        idNo: parseStringToStar(identity.idNo)
+      }
+      res.send({code: 0, data})
     }else {
       res.send({code: 1, msg: '未认证'})
     }
@@ -310,6 +357,30 @@ router.get( '/identityImgs/*', function (req, res){
   } else {
     res.sendFile(req.url);
   }
+})
+
+// 获取百度地图接口地点输入提示
+router.post('/addr', function (req, res) {
+  const {query, region} = req.body
+  const ak = 'MBZMd8x62ipirNXCtvGrm0PDr3j4WXH2'
+  const url = 'http://api.map.baidu.com/place/v2/suggestion'
+  request(encodeURI(`${url}?query=${query}&region=${region}&city_limit=true&output=json&ak=${ak}`), {json: true}, function (err, response, body){
+    if (!err && body.status === 0){
+      res.send({code: 0, data: body})
+    }
+  })
+})
+
+// 获取百度地图接口逆地理编码
+router.post('/geocoding', function (req, res) {
+  const {address} = req.body
+  const ak = 'MBZMd8x62ipirNXCtvGrm0PDr3j4WXH2'
+  const url = 'http://api.map.baidu.com/geocoding/v3/'
+  request(encodeURI(`${url}?address=${address}&output=json&ak=${ak}`), {json: true}, function (err, response, body){
+    if (!err && body.status === 0){
+      res.send({code: 0, data: body})
+    }
+  })
 })
 
 

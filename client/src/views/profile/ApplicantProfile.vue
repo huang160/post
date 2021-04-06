@@ -6,26 +6,16 @@
       fixed
     >
     </van-nav-bar>
-    <header style="padding-top: 60px;background-color: #22c47c">
+    <header style="padding: 60px 0 35px 0;background-color: #22c47c">
       <van-image
         round
         width="4rem"
         height="4rem"
         fit="scale-down"
         :src=this.header
-        style="border: 1px solid #eee;cursor: pointer"
+        style="border: 1px solid #eee;cursor: pointer;"
         @click="information"
       />
-      <van-row justify="space-between" style="padding: 15px 0 5px 0;color: #fff">
-        <van-col span="12">
-          <div>0</div>
-          <div style="opacity: 0.7;font-size: 12px">面试</div>
-        </van-col>
-        <van-col span="12">
-          <div>1</div>
-          <div style="opacity: 0.7;font-size: 12px">收藏</div>
-        </van-col>
-      </van-row>
     </header>
     <div class="container" style="text-align: left">
       <van-cell

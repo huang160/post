@@ -6,15 +6,6 @@ import actions from "./actions"
 
 Vue.use(Vuex)
 
-/*const moduleUser = {
-  state: () => ({
-    user: []
-  }),
-  mutations: {},
-  actions: {},
-  getters: {}
-}*/
-
 const state ={
   user:[],
   userList: [],

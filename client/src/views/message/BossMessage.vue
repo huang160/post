@@ -22,9 +22,10 @@
       </div>
     </footer>
     <div class="container" style="margin-top: 83px;padding: 1px 15px;">
+      <van-empty v-if="JSON.stringify(chat.chatMsgs) === '[]'" image="search" description="无消息,快去找牛人聊聊吧~" />
       <div
         class="chatMsg"
-        v-if="chatMsg.lastMsgs"
+        v-else
         v-for="(msg, index) in msgList === 1 ? chatMsg.lastMsgs : msgList === 2 ? chatMsg.readMsg : chatMsg.unReadMsg"
         :key="index"
         @click="() => {
@@ -60,8 +61,8 @@
           </div>
           <div style="width: 80%;color: #969799;margin-top: 2px;">
             <div class="van-ellipsis"  style="display: flex;flex-direction: row;font-size: 14px;">
-              <div v-if="msg.to === user._id" style="width: 50px;">{{!msg.read ? '[新招呼]' : '[已读]'}}</div>
-              <div v-else style="width: 36px;">{{!msg.read ? '[送达]' : '[已读]'}}</div>
+              <div v-if="msg.to === user._id">{{!msg.read ? '[新招呼]' : '[已读]'}}</div>
+              <div v-else>{{!msg.read ? '[送达]' : '[已读]'}}</div>
               <div class="van-ellipsis" style="margin-left: 2px;">{{ msg.content }}</div>
             </div>
           </div>
@@ -70,7 +71,7 @@
           {{dateFormat(msg.create_time)}}
         </div>
       </div>
-      <van-empty v-else image="search" description="无消息,快去找牛人聊聊吧~" />
+
     </div>
   </div>
 

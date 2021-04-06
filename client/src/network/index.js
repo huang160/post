@@ -15,7 +15,9 @@ export const reqExpList = () => ajax('/explist')
 //获取牛人经历接口
 export const reqGetExp = (_id) => ajax('/getexp', _id)
 //boss身份认证接口
-export const reqIdentity = ({name, pros, cons}) => ajax('/identity', {name, pros, cons}, 'POST')
+export const reqIdentity = ({name, idNo, pros, cons}) => ajax('/identity', {name, idNo, pros, cons}, 'POST')
+//boss身份认证信息更改
+export const reqUpdateIde = (data) => ajax('/ideStatus', data, 'POST')
 //获取boss身份认证接口
 export const reqIdentityMsg = () => ajax('/identitymsg')
 //获取用户信息
@@ -34,3 +36,7 @@ export const reqReadMsg = (from) => ajax('/readmsg', {from}, 'POST')
 export const postList = () => ajax('/assets/trade')
 // 省市区三级联动(静态资源.json文本)
 export const cityList = () => ajax('/jsons/pca-code.json')
+// 获取百度地图接口地点输入提示信息
+export const reqAddrTip = (data) => ajax('/addr', data, 'POST')
+// 获取百度地图接口逆地理编码
+export const reqAddrCode = (address) => ajax('/geocoding', address, 'POST')

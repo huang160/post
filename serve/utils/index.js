@@ -19,6 +19,25 @@ exports.current = function () {
 }
 
 /*
+字符串保留首尾两位，中间字符串由*星号替换
+ */
+
+// str代表需要处理的字符串
+
+exports.parseStringToStar = function  (str) {
+  if (str.length === 2){
+    return str[0] + '*'
+  } else {
+    let new_str = ''
+    // 首尾保留，所以从下标1开始，长度-1
+    for (let i = 1; i<str.length - 1; i++){
+      new_str += '*'
+    }
+    return str[0] + new_str + str[1]
+  }
+}
+
+/*
 返回对应的路由表
  */
 exports.menu = function (username, password) {

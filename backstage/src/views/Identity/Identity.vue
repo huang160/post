@@ -31,6 +31,11 @@ export default {
           label: '姓名'
         },
         {
+          prop: 'idNo',
+          label: '身份证号码',
+          width: 200
+        },
+        {
           prop: 'cons',
           label: '正面',
           width: 200

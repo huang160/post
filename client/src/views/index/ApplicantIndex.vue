@@ -169,7 +169,7 @@
         >
           <div v-for="(item, index) in list" v-if="item.postLists" :key="index" style="text-align: left">
             <div class="postList" v-for="(i, postIndex) in item.postLists" :key="postIndex" v-if="i.status === 1 || 2">
-              <div style="cursor: pointer" @click="i.checked = true;change = true">
+              <div style="cursor: pointer" @click="onDetail(i)">
                 <div class="listHeader">
                   <div class="listTitle van-ellipsis">{{i.postName}}</div>
                   <div class="listValue">{{i.salary}}</div>
@@ -203,7 +203,7 @@
                   left-arrow
                   fixed
                   title="职位详情"
-                  @click-left="i.checked = false;change = false"
+                  @click-left="onOut(i)"
                 />
                 <div class="detailList" style="margin: 46px 0 50px 0;padding: 10px;">
                   <div class="header" style="border-bottom: 1px solid #eee;padding: 0 16px 5px 16px;">
@@ -256,6 +256,32 @@
                       style="font-size: 12px;padding-bottom: 10px;word-break: break-all; overflow:hidden;">
                     </div>
                   </div>
+                  <div class="addr"  v-if="codeObj !== ''" style="padding: 10px 16px;border-bottom: 1px solid #eee;">
+                    <baidu-map
+                      class="map"
+                      :scroll-wheel-zoom="true"
+                      :center="centerCode"
+                      :zoom="zoom"
+                    >
+                      <bm-marker
+                        :position="codeObj"
+                        :zIndex="99"
+                        :icon="{ url: markerIcon, size: { width: 25, height: 25 } }"
+                        @click="isShowInfo = true"
+                        style="margin-top: 10px"
+                      >
+                        <bm-info-window
+                          :show="isShowInfo"
+                          :close-on-click="false"
+                          title="工作地点"
+                          style="font-size: 12px;text-align: center;"
+                        >
+                          <div> {{i.addr}}</div>
+                        </bm-info-window>
+                      </bm-marker>
+                      <bm-view style="width: 100%; height:100%; flex: 1"></bm-view>
+                    </baidu-map>
+                  </div>
                   <div v-if="userList">
                     <div v-for="(user, userIndex) in userList" :key="userIndex" v-if="user._id === item._id">
                       <div style="font-size: 14px;font-weight: bold;padding: 10px 16px;">在招相关职位</div>
@@ -297,6 +323,7 @@ import {mapState} from 'vuex'
 
 import cityData from 'china-city-data'
 import {parseStringToStar} from '../../utils'
+import BaiduMap from 'vue-baidu-map'
 import {
   NavBar,
   Button,
@@ -330,6 +357,10 @@ Vue.use(IndexAnchor)
 Vue.use(Cascader)
 Vue.use(Image)
 Vue.use(Toast)
+
+Vue.use(BaiduMap, {
+  ak: '4ThO4IcKPiBjSMmaPglaaahdlUG2yGUV'
+})
 
 export default {
   name: "ApplicantIndex",
@@ -401,7 +432,12 @@ export default {
       eduItems: [],
       salItems: '',
       exItems: [],
-      timer: ''
+      timer: '',
+      centerCode: {},
+      codeObj: {},
+      zoom: 100,
+      markerIcon: require('../../assets/img/bz.png'),
+      isShowInfo: true
    }
   },
   computed: {
@@ -469,7 +505,6 @@ export default {
           if (this.list.length !== 0){
             // 过滤筛选城市列表
             if (this.city){
-              this.area = ''
               this.list.forEach((listVal_1, listInd_1) => {
                 for (let cityInd = listVal_1.postLists.length-1; cityInd >= 0; cityInd--){
                   let arr = listVal_1.postLists[cityInd].city.split('·')
@@ -485,8 +520,7 @@ export default {
             }
 
             // 过滤筛选城市【区级】列表
-            if (this.area){
-              this.city = ''
+            if (this.area ){
               this.list.forEach((listVal_2, listInd_2) => {
                 for (let areaInd = listVal_2.postLists.length-1; areaInd >= 0; areaInd--){
                   let arr = listVal_2.postLists[areaInd].city.split('·')
@@ -618,6 +652,7 @@ export default {
       this.cityShow = false
       this.list = []
       this.city = value
+      this.area = ''
       this.onRefresh({job: this.job})
     },
     // 市区获取点击事件
@@ -626,6 +661,7 @@ export default {
       this.popupShow = false
       this.list.splice(0, this.list.length)
       this.area = value[2]
+      this.city = ''
       this.onRefresh({job: this.job})
     },
     // 学历要求【不限】按钮改变点击事件
@@ -745,6 +781,25 @@ export default {
       })
       this.onRefresh({job: this.job})
     },
+    onOut(i){
+      i.checked = false
+      this.change = false
+    },
+    onDetail(i){
+      i.checked = true
+      this.change = true
+      if (i.addr) {
+        // 获取百度地图接口逆地理编码
+        this.$store.dispatch('getAddrCode', {address: i.addr}).then(res => {
+          if (res.data.code === 0){
+            const {result} = res.data.data
+            this.codeObj = result.location
+            const {lat, lng} = result.location
+            this.centerCode = {lat: lat + 0.0002, lng: lng + 0.0001}
+          }
+        })
+      }
+    },
     // 跳转到聊天页面
     onClickPost(item){
       this.$router.push({
@@ -792,6 +847,7 @@ export default {
     this.totalSelect[0].sum = this.eduNum
     this.totalSelect[1].sum = this.salaryNum
     this.totalSelect[2].sum = this.eduNum
+
   },
   mounted() {
     if (!this.$store.state.user.header){
@@ -907,5 +963,9 @@ footer{
 }
 .sal{
   color: #22c47c;
+}
+.map {
+  width: 100%;
+  height: 150px;
 }
 </style>

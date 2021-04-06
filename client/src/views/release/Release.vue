@@ -73,6 +73,41 @@
             @cancel="cityShow = false"
           />
         </van-popup>
+        <van-field
+          v-model="addr"
+          clearable
+          center
+          rows="1"
+          autosize
+          type="textarea"
+          label="工作地址"
+          label-width="60px"
+          label-class="addr"
+          right-icon="location-o"
+          placeholder="具体到写字楼/大厦/楼栋/街道等门牌信息，城区更改移步至工作城市栏"
+          @click-right-icon="onRightIcon"
+        />
+        <van-popup v-model="addrShow" position="bottom" style="height: 60%">
+          <div style="position: relative">
+            <van-search
+              v-model="searchVal"
+              show-action
+              placeholder="请输入搜索关键词"
+              @input="onInput"
+              @cancel="onCancel"
+              style="position: sticky;top: 0;z-index: 999"
+            />
+            <van-cell
+              v-if="searchVal !== ''"
+              v-for="(item, index) in addrList"
+              :key="index"
+              :title="item.name"
+              :label="item.address"
+              @click="addrDetail(item)"
+            />
+          </div>
+
+        </van-popup>
         <van-cell title="岗位职责" :border="false" />
         <van-field
           v-model = "duty"
@@ -119,9 +154,10 @@
 <script>
 import Vue from 'vue'
 import {mapState} from "vuex";
-import {NavBar, NoticeBar, Icon, Cell, Popup, Cascader, Picker, Field, Button, Skeleton, Toast, Dialog} from 'vant'
+import {NavBar, Search, NoticeBar, Icon, Cell, Popup, Cascader, Picker, Field, Button, Skeleton, Toast, Dialog} from 'vant'
 
 Vue.use(NavBar)
+Vue.use(Search)
 Vue.use(NoticeBar)
 Vue.use(Icon)
 Vue.use(Cell)
@@ -168,6 +204,10 @@ export default {
       cityList: [],
       duty: '',
       requirement: '',
+      addr: '',
+      addrShow: false,
+      addrList: [],
+      searchVal: '',
       onDisabled: true,
       loading: true
     }
@@ -176,6 +216,32 @@ export default {
     ...mapState(['user','postList', 'identity'])
   },
   methods: {
+    onInput(val) {
+      const arr = this.city.split('·')
+      if (val !== ''){
+        this.$store.dispatch('getAddrTip', {query: val, region: arr[0]}).then(res => {
+          if (res.data.code === 0) {
+            const result = res.data.data
+            this.addrList = result.result
+          }
+        })
+      }
+    },
+    onCancel() {
+      this.addrShow = false
+    },
+    addrDetail(item) {
+      const {address, name} = item
+      this.addr = address + name
+      this.addrShow = false
+    },
+    onRightIcon(){
+      if (this.city !== ''){
+        this.addrShow = true
+      } else {
+        Toast('请先选择工作城市')
+      }
+    },
     onBack(){
       if (
         this.postName !== '' ||
@@ -185,7 +251,8 @@ export default {
         this.education !== '' ||
         this.city !== ''||
         this.duty.trim() !== ''||
-        this.requirement.trim() !== ''
+        this.requirement.trim() !== '' ||
+        this.addr !== ''
       ){
         Dialog.confirm({
           title: '温馨提示',
@@ -257,6 +324,7 @@ export default {
         education: this.education,
         city: this.city,
         duty: this.duty,
+        addr: this.addr,
         requirement: this.requirement
       }
       Dialog.confirm({
@@ -288,6 +356,7 @@ export default {
         experience: this.experience,
         education: this.education,
         city: this.city,
+        addr: this.addr,
         duty: this.duty,
         requirement: this.requirement,
         status: 2,
@@ -362,13 +431,14 @@ export default {
       this.$store.dispatch('postMsg', _id).then(res => {
         if (res.data.code === 0){
           const result = res.data.data
-          const {city, duty, education, experience, post, postName, requirement, salary, status} = result
+          const {city, duty, addr, education, experience, post, postName, requirement, salary, status} = result
           this.postName = postName
           this.post = post
           this.salary = salary
           this.experience = experience
           this.education = education
           this.city = city
+          this.addr = addr
           this.duty = duty
           this.requirement = requirement
           this.status = status
@@ -390,6 +460,7 @@ export default {
       this.experience !== '' &&
       this.education !== '' &&
       this.city !== '' &&
+      this.addr !== '' &&
       this.duty.trim() !== '' &&
       this.requirement.trim() !== '');
   }
@@ -402,4 +473,5 @@ footer{
   bottom: 0;
   width: 100%;
 }
+
 </style>
